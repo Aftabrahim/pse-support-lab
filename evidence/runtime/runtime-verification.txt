@@ -2,7 +2,7 @@ Runtime evidence collected: Sun Nov 15 12:15:37 UTC 2026
 
 ========== DOCKER STATUS ==========
 NAME                          IMAGE                                                                     COMMAND                  SERVICE      CREATED       STATUS                       PORTS
-invoicely-lite-alloy-1        grafana/alloy:v1.21.3                                                     "/bin/alloy run --se…"   alloy        4 hours ago   Up About an hour             
+invoicely-lite-alloy-1        grafana/alloy:v1.21.3                                                     "/bin/alloy run --se…"   alloy        4 hours ago   Up About an hour
 invoicely-lite-api-1          sha256:e26800c2b463ef7f924c8d33284ffd6aa2d7156702b3b6c288b1787f58d615f6   "/usr/local/bin/api"     api          4 hours ago   Up About an hour (healthy)   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
 invoicely-lite-asp-mock-1     sha256:946d2d5d2dd50f41820d462ae9f4ae4e987c36d4c234040750e9d5326cb75c7d   "/usr/local/bin/asp-…"   asp-mock     4 hours ago   Up About an hour (healthy)   0.0.0.0:8090->8090/tcp, [::]:8090->8090/tcp
 invoicely-lite-cadvisor-1     ghcr.io/google/cadvisor:v0.60.6                                           "/usr/bin/entrypoint…"   cadvisor     4 hours ago   Up About an hour (healthy)   8080/tcp
@@ -33,7 +33,7 @@ RestartCount=0 OOMKilled=false ExitCode=0 Status=running
 {"time":"2026-11-15T11:14:47.676368153Z","level":"INFO","msg":"asp-mock listening","addr":":8090"}
 
 ========== OASIS AND SAHARA DATABASE STATUS ==========
-            name             |  invoice_number   |  status  |            asp_message_id            
+            name             |  invoice_number   |  status  |            asp_message_id
 -----------------------------+-------------------+----------+--------------------------------------
  Oasis Builders Supply LLC   | OBS-2610-001      | Accepted | 11066d8f-f7eb-4adc-be57-7c71d4753e4c
  Oasis Builders Supply LLC   | OBS-2610-002      | Accepted | 2ed3e83c-f861-4f0a-8b72-edd437ab29b0
@@ -64,4 +64,3 @@ RestartCount=0 OOMKilled=false ExitCode=0 Status=running
  Sahara Medical Supplies FZE | SMS-1029-011      | Accepted | ea31eda3-e4a5-4dfc-a76b-68bf9c825639
  Sahara Medical Supplies FZE | SMS-1029-012      | Accepted | 24a78b82-2a04-4cf3-a0b8-8d444129dce5
 (28 rows)
-
