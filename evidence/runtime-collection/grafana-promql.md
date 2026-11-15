@@ -1,36 +1,27 @@
-# Runtime verification checklist
+# Grafana / Prometheus evidence queries
 
-Runtime checks were not executed in the preparation environment. Run these against the actual stack and retain timestamped output.
+Set the time range to **16 Nov 2026, 09:25–13:00 Asia/Dubai** (or the actual replay window if you run at another time).
 
-## Docker
+## API restart / impact
+- API restarts: `changes(process_start_time_seconds{job="api"}[15m])`
+- API availability: `up{job="api"}`
+- API 5xx count: `sum(increase(invoicely_http_request_duration_seconds_count{code=~"5.."}[15m]))`
+- API memory: `container_memory_working_set_bytes{container_label_com_docker_compose_service="api"}`
+- Go heap: `go_memstats_heap_inuse_bytes{job="api"}`
+- Go heap objects: `go_memstats_heap_objects{job="api"}`
+- API goroutines: `go_goroutines{job="api"}`
+- Request p95: `histogram_quantile(0.95, sum by (le, route) (rate(invoicely_http_request_duration_seconds_bucket{route!~"/metrics|/healthz"}[5m])))`
 
-```bash
-docker compose ps
-docker compose logs --since=2h api
-docker inspect <api-container> --format 'OOMKilled={{.State.OOMKilled}} ExitCode={{.State.ExitCode}} RestartCount={{.RestartCount}}'
-docker stats --no-stream
-```
+## Oasis upload latency
+- Import duration p95: `histogram_quantile(0.95, sum by (le) (rate(invoicely_import_duration_seconds_bucket[5m])))`
+- Participant lookup p95: `histogram_quantile(0.95, sum by (le) (rate(invoicely_participant_lookup_duration_seconds_bucket[5m])))`
+- Participant lookup rate: `sum by (result) (rate(invoicely_participant_lookup_duration_seconds_count[1m]))`
+- AE-BR-09 increases: `sum(increase(invoicely_validation_failures_total{rule="AE-BR-09"}[15m]))`
 
-## Prometheus / Grafana
+## Sahara throttling / outcomes
+- ASP HTTP responses: `sum by (code) (increase(invoicely_asp_responses_total[5m]))`
+- ASP document outcomes: `sum by (outcome) (increase(asp_documents_total[5m]))`
+- API submissions: `sum by (outcome) (increase(invoicely_submissions_total[5m]))`
+- Queue depth: `invoicely_submission_queue_depth`
 
-Use the metric names exposed by the configured Prometheus scrape targets; adjust labels to match the environment.
-
-```promql
-rate(http_server_requests_total{status=~"5.."}[5m])
-container_memory_working_set_bytes
-rate(process_cpu_seconds_total[5m])
-go_memstats_heap_alloc_bytes
-go_memstats_heap_inuse_bytes
-rate(go_gc_duration_seconds_count[5m])
-```
-
-Correlate API restarts with memory working set, Go heap, request volume, upload concurrency and 5xx rate. A memory limit or cache implementation alone does not prove an OOM event.
-
-## Required evidence
-
-- Container OOMKilled, exit code, restart count and timestamp.
-- API logs around each restart.
-- Memory working set and Go heap/GC metrics.
-- Request volume, 5xx rate and upload concurrency.
-- ASP receipt list/message IDs for the 40 BluePeak/Sahara documents.
-- Import IDs and invoice status/ASP IDs for Oasis.
+Dashboard panels in `observability/grafana/dashboards/invoicely-overview.json` include `API process restarts (1h)`, `5xx responses (15m)`, `Import processing time p50 / p95`, `Participant lookups`, `ASP responses by HTTP status`, `ASP: documents by outcome (ASP side)`, `Container memory (working set)` and `API Go heap in use`.

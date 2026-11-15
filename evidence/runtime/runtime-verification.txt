@@ -1,0 +1,67 @@
+Runtime evidence collected: Sun Nov 15 12:15:37 UTC 2026
+
+========== DOCKER STATUS ==========
+NAME                          IMAGE                                                                     COMMAND                  SERVICE      CREATED       STATUS                       PORTS
+invoicely-lite-alloy-1        grafana/alloy:v1.21.3                                                     "/bin/alloy run --se…"   alloy        4 hours ago   Up About an hour             
+invoicely-lite-api-1          sha256:e26800c2b463ef7f924c8d33284ffd6aa2d7156702b3b6c288b1787f58d615f6   "/usr/local/bin/api"     api          4 hours ago   Up About an hour (healthy)   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+invoicely-lite-asp-mock-1     sha256:946d2d5d2dd50f41820d462ae9f4ae4e987c36d4c234040750e9d5326cb75c7d   "/usr/local/bin/asp-…"   asp-mock     4 hours ago   Up About an hour (healthy)   0.0.0.0:8090->8090/tcp, [::]:8090->8090/tcp
+invoicely-lite-cadvisor-1     ghcr.io/google/cadvisor:v0.60.6                                           "/usr/bin/entrypoint…"   cadvisor     4 hours ago   Up About an hour (healthy)   8080/tcp
+invoicely-lite-grafana-1      grafana/grafana:13.2.6                                                    "/run.sh"                grafana      4 hours ago   Up About an hour             0.0.0.0:3001->3000/tcp, [::]:3001->3000/tcp
+invoicely-lite-loki-1         grafana/loki:3.7.9                                                        "/usr/bin/loki -conf…"   loki         4 hours ago   Up About an hour             3100/tcp
+invoicely-lite-postgres-1     postgres:16.15-alpine3.23                                                 "docker-entrypoint.s…"   postgres     4 hours ago   Up About an hour (healthy)   0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+invoicely-lite-prometheus-1   prom/prometheus:v3.16.0                                                   "/bin/prometheus --c…"   prometheus   4 hours ago   Up About an hour             0.0.0.0:9090->9090/tcp, [::]:9090->9090/tcp
+invoicely-lite-web-1          sha256:a0793e798a900495898dbee416faa3ac05f345eae056f39681614f439f1fd1d3   "docker-entrypoint.s…"   web          4 hours ago   Up About an hour (healthy)   0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+
+========== API STATE ==========
+RestartCount=0 OOMKilled=false ExitCode=0 Status=running
+
+========== ASP STATE ==========
+RestartCount=0 OOMKilled=false ExitCode=0 Status=running
+
+========== ASP ACCEPTANCE LOGS ==========
+{"time":"2026-11-15T08:28:19.564060213Z","level":"INFO","msg":"asp-mock listening","addr":":8090"}
+{"time":"2026-11-15T10:06:12.360708367Z","level":"INFO","msg":"asp-mock listening","addr":":8090"}
+{"time":"2026-11-15T10:17:33.441753224Z","level":"INFO","msg":"document accepted","message_id":"021371a1-7f35-4f1e-8491-1f6ed1a4d4c7","sender":"0235:1003182746","receiver":"0235:1001304958","invoice_number":"OBS-2611-004-JGHW"}
+{"time":"2026-11-15T10:17:33.458058838Z","level":"INFO","msg":"document accepted","message_id":"8b205ebe-29a7-45c1-9e1d-56de6cd831d1","sender":"0235:1003182746","receiver":"0235:1001748392","invoice_number":"OBS-2611-002-JGHW"}
+{"time":"2026-11-15T10:17:33.461368527Z","level":"INFO","msg":"document accepted","message_id":"619ea523-77eb-43e5-bf9e-a6754d138f16","sender":"0235:1003182746","receiver":"0235:1001415069","invoice_number":"OBS-2611-001-JGHW"}
+{"time":"2026-11-15T10:17:33.461924388Z","level":"INFO","msg":"document accepted","message_id":"16de3320-012d-4f55-b0e4-0f79702455ae","sender":"0235:1003182746","receiver":"0235:1001415069","invoice_number":"OBS-2611-005-JGHW"}
+{"time":"2026-11-15T10:17:33.46544849Z","level":"INFO","msg":"document accepted","message_id":"6c2d87c1-67cf-44f7-83ae-7c3cd8ba6f7a","sender":"0235:1003182746","receiver":"0235:1001859403","invoice_number":"OBS-2611-003-JGHW"}
+{"time":"2026-11-15T10:17:33.477422621Z","level":"INFO","msg":"document accepted","message_id":"542f27cd-8818-4634-bb3e-9ce5689de0d9","sender":"0235:1003182746","receiver":"0235:1001526170","invoice_number":"OBS-2611-006-JGHW"}
+{"time":"2026-11-15T10:17:33.480260041Z","level":"INFO","msg":"document accepted","message_id":"c7ffcdb9-535e-4959-898e-6720abf3afc6","sender":"0235:1003182746","receiver":"0235:1001748392","invoice_number":"OBS-2611-007-JGHW"}
+{"time":"2026-11-15T10:17:33.484952157Z","level":"INFO","msg":"document accepted","message_id":"dbc628a9-fd83-42d3-93e3-8bfc656d1343","sender":"0235:1003182746","receiver":"0235:1001859403","invoice_number":"OBS-2611-008-JGHW"}
+{"time":"2026-11-15T10:42:07.372189091Z","level":"INFO","msg":"asp-mock listening","addr":":8090"}
+{"time":"2026-11-15T11:14:47.676368153Z","level":"INFO","msg":"asp-mock listening","addr":":8090"}
+
+========== OASIS AND SAHARA DATABASE STATUS ==========
+            name             |  invoice_number   |  status  |            asp_message_id            
+-----------------------------+-------------------+----------+--------------------------------------
+ Oasis Builders Supply LLC   | OBS-2610-001      | Accepted | 11066d8f-f7eb-4adc-be57-7c71d4753e4c
+ Oasis Builders Supply LLC   | OBS-2610-002      | Accepted | 2ed3e83c-f861-4f0a-8b72-edd437ab29b0
+ Oasis Builders Supply LLC   | OBS-2610-003      | Accepted | 630146b1-93e9-445f-b265-108bc6ee9cde
+ Oasis Builders Supply LLC   | OBS-2610-004      | Accepted | b78abe3b-1775-43b2-8e99-0c045f98601c
+ Oasis Builders Supply LLC   | OBS-2610-005      | Accepted | f97e8ecd-a110-4dc6-98ff-22424733ae93
+ Oasis Builders Supply LLC   | OBS-2610-006      | Accepted | 0784c9f6-65f0-42ff-91d4-4b52927b1d97
+ Oasis Builders Supply LLC   | OBS-2610-007      | Accepted | 55524344-62fc-47e5-8b4f-79d45b89c8e0
+ Oasis Builders Supply LLC   | OBS-2610-008      | Accepted | b7bc9c91-e492-4016-adb5-eca90c33f581
+ Oasis Builders Supply LLC   | OBS-2611-001-JGHW | Accepted | 619ea523-77eb-43e5-bf9e-a6754d138f16
+ Oasis Builders Supply LLC   | OBS-2611-002-JGHW | Accepted | 8b205ebe-29a7-45c1-9e1d-56de6cd831d1
+ Oasis Builders Supply LLC   | OBS-2611-003-JGHW | Accepted | 6c2d87c1-67cf-44f7-83ae-7c3cd8ba6f7a
+ Oasis Builders Supply LLC   | OBS-2611-004-JGHW | Accepted | 021371a1-7f35-4f1e-8491-1f6ed1a4d4c7
+ Oasis Builders Supply LLC   | OBS-2611-005-JGHW | Accepted | 16de3320-012d-4f55-b0e4-0f79702455ae
+ Oasis Builders Supply LLC   | OBS-2611-006-JGHW | Accepted | 542f27cd-8818-4634-bb3e-9ce5689de0d9
+ Oasis Builders Supply LLC   | OBS-2611-007-JGHW | Accepted | c7ffcdb9-535e-4959-898e-6720abf3afc6
+ Oasis Builders Supply LLC   | OBS-2611-008-JGHW | Accepted | dbc628a9-fd83-42d3-93e3-8bfc656d1343
+ Sahara Medical Supplies FZE | SMS-1029-001      | Accepted | e563251b-63fc-486b-a77e-6f43e17583b9
+ Sahara Medical Supplies FZE | SMS-1029-002      | Accepted | 73ef3a35-0306-4c8c-b6a8-73ea3f4ac874
+ Sahara Medical Supplies FZE | SMS-1029-003      | Accepted | eba344ae-cef7-40cb-bce9-9e6d5882baa9
+ Sahara Medical Supplies FZE | SMS-1029-004      | Accepted | 6297978e-9128-4cd1-a18d-0b2e2b32b01d
+ Sahara Medical Supplies FZE | SMS-1029-005      | Accepted | 728dad40-e2ab-4015-bbbb-151bf55285a3
+ Sahara Medical Supplies FZE | SMS-1029-006      | Accepted | 53117434-0d64-439d-86b5-d8981bc2bad6
+ Sahara Medical Supplies FZE | SMS-1029-007      | Accepted | ad649128-a942-431c-a249-96248aeffc8a
+ Sahara Medical Supplies FZE | SMS-1029-008      | Accepted | 4c3eaef2-ac28-4755-8e56-ba456225f3dc
+ Sahara Medical Supplies FZE | SMS-1029-009      | Accepted | 16fc8c16-3a8e-4991-a31f-fe519a05f87f
+ Sahara Medical Supplies FZE | SMS-1029-010      | Accepted | 3d96df71-94cf-4ce1-9a79-5c92f61e3c29
+ Sahara Medical Supplies FZE | SMS-1029-011      | Accepted | ea31eda3-e4a5-4dfc-a76b-68bf9c825639
+ Sahara Medical Supplies FZE | SMS-1029-012      | Accepted | 24a78b82-2a04-4cf3-a0b8-8d444129dce5
+(28 rows)
+

@@ -1,24 +1,16 @@
-# PSE Support Lab — Invoicely Lite
+# Complyance Product Support Engineer Assignment
 
-This repository contains the PSE support assignment investigation for the five customer inbox cases.
+Evidence-backed investigation of the five supplied support incidents.
 
 ## Submission
-
-- [Detailed submission report](SUBMISSION.md)
-- [Evidence and investigation notes](evidence/)
-- [Runtime verification queries](evidence/runtime-collection/queries.sql)
-- [Grafana and Docker checks](evidence/runtime-collection/grafana-promql.md)
-
-## Cases covered
-
-1. Oasis Builders — upload stuck in Processing
-2. Marina Bay — API container restarts / memory-pressure investigation
-3. Al Noor Fuel — BR-CO-15 VAT rounding mismatch
-4. BluePeak / Sahara Medical — ASP HTTP 429 and invoice-state reconciliation
-5. Ghaf Tree Café — invoice date-format validation
+- [Detailed incident analysis and responses](SUBMISSION.md)
+- [Evidence index and limitations](evidence/README.md)
+- [Source analysis](evidence/source-analysis/)
+- [Runtime verification output](evidence/runtime/runtime-verification.txt)
+- [Read-only SQL queries](evidence/runtime-collection/queries.sql)
+- [Grafana and Prometheus query notes](evidence/runtime-collection/grafana-promql.md)
 
 ## Evidence integrity
+Findings distinguish source-code analysis, sample-workbook calculations and observed runtime state. Current container health is not treated as proof that no earlier restart occurred. The November Sahara batch outcome is not claimed because it is not established by the captured runtime evidence.
 
-The analysis distinguishes source-code/workbook findings from runtime observations. Docker services were not started in the preparation environment, so no live database rows, container OOM state, runtime metrics, ASP message IDs, or customer emails sent are claimed. Customer communications are drafts only.
-
-See `SUBMISSION.md` for detailed findings, limitations, and recommended next steps.
+Customer communications are proposed drafts and were not sent.
