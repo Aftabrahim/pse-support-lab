@@ -464,3 +464,14 @@ ChatGPT was used to inspect the supplied repository, read source code and suppor
 - Ghaf workbook date analysis: `evidence/source-analysis/ghaf-date-analysis.md`
 - Runtime SQL: `evidence/runtime-collection/queries.sql`
 - Grafana / Prometheus queries: `evidence/runtime-collection/grafana-promql.md`
+
+## Final validation checklist
+
+- [x] Start/inspect the application stack and capture a current container-state snapshot (15 November 2026).
+- [ ] Capture API logs, resource usage and Prometheus/Grafana measurements; distinguish current health from historical incident evidence.
+- [ ] Confirm Oasis import and ASP state before any retry.
+- [ ] Confirm or rule out the historical API OOM/restart hypothesis using timestamp-correlated logs and metrics.
+- [ ] Add and run BR-CO-15 rounding regression tests.
+- [ ] Reconcile all 40 ASP submissions and safely repair only confirmed unaccepted invoices.
+- [ ] Validate corrected Ghaf workbook dates.
+- [ ] Replace this checklist with actual test outputs and timestamps before final submission if the evaluator expects runtime proof.
