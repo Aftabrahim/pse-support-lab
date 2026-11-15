@@ -7,7 +7,7 @@
 
 ## Evidence scope and integrity
 
-I reviewed the supplied application repository, five inbox cases, five Excel attachments, application source, Docker Compose configuration, database schema/seed data, and Grafana/Prometheus definitions. The findings below are source-code and workbook-level findings. I could not start Docker/Compose, PostgreSQL, Grafana, or the application in the preparation environment. Accordingly, I do not claim live database observations, runtime logs, Grafana measurements, container OOM state, ASP message IDs, or that customer emails were sent. Customer replies are drafts only. Runtime verification commands are provided under `evidence/runtime-collection/`.
+I reviewed the supplied application repository, five inbox cases, five Excel attachments, application source, Docker Compose configuration, database schema/seed data, and Grafana/Prometheus definitions. The source-code and workbook findings below are distinguished from live runtime observations. On 15 November 2026, I verified that the Docker Compose stack was running: API, ASP mock, PostgreSQL, web, cAdvisor, Grafana, Prometheus, Loki and Alloy containers were present; API, ASP mock, PostgreSQL, web and cAdvisor reported healthy, while Grafana, Prometheus, Loki and Alloy were running. A point-in-time `docker inspect` showed API, ASP mock and PostgreSQL each with `RestartCount=0`, `OOMKilled=false`, and `ExitCode=0`; the API container's current start time was `2026-11-15T11:14:44Z`. These observations describe the current container lifecycle only. They do not establish or disprove the earlier reported three API restarts, and the captured Docker events were predominantly health-check `exec_*` events rather than evidence of those historical restarts. Historical logs, resource metrics, live database state, ASP message IDs, and customer email delivery have not yet been verified. Customer communications are drafts only. Runtime query instructions are provided under `evidence/runtime-collection/`.
 
 ## Executive summary
 
@@ -35,7 +35,7 @@ The importer inserts invoice records before group validation. A repeated upload 
 
 **Assessment:** Docker Compose sets the API container memory limit to 128 MB. The source contains an in-memory cache that retains uploaded data/workbook/invoice objects in a map without an evident TTL, eviction, or delete path. The supplied load profile includes a peak path of 240 uploads with eight concurrent workers. These facts make memory pressure a credible hypothesis, not proof that the container was OOM-killed.
 
-**Evidence still required:** Docker restart count, container exit code and `State.OOMKilled`, API logs around restart time, container memory usage, Go heap/GC metrics, request rate, 5xx rate, and queue/backlog. Use the runtime commands in `evidence/runtime-collection/grafana-promql.md`.
+**Runtime verification (15 November 2026):** The API container was running/healthy with `RestartCount=0`, `OOMKilled=false`, `ExitCode=0`, and start time `2026-11-15T11:14:44Z`. ASP mock and PostgreSQL also reported zero restarts and `OOMKilled=false`. The Docker event sample showed repeated health-check executions, not the three historical API restarts described in the alert. This is a current-lifecycle snapshot, not a historical reconstruction; it neither confirms nor rules out the earlier restart incident. Historical API logs, memory/Go heap metrics, request and 5xx rates, and queue/backlog measurements remain to be collected. The terminal command output was truncated/malformed before API logs, `docker stats`, SQL and Prometheus query results were returned.
 
 **Immediate actions:** Preserve timestamps and logs; correlate restarts with upload/load activity; check whether the API is healthy and whether work was lost or duplicated. Do not report OOM as confirmed until runtime state proves it.
 
@@ -73,9 +73,10 @@ Customer-facing acknowledgements and updates should be sent only after verifying
 
 ## Final validation checklist
 
-- [ ] Run the application stack and capture actual runtime evidence where available.
+- [x] Start/inspect the application stack and capture a current container-state snapshot (15 November 2026).
+- [ ] Capture API logs, resource usage and Prometheus/Grafana measurements; distinguish current health from historical incident evidence.
 - [ ] Confirm Oasis import and ASP state before any retry.
-- [ ] Confirm or rule out API OOM/restart cause using container state and metrics.
+- [ ] Confirm or rule out the historical API OOM/restart hypothesis using timestamp-correlated logs and metrics.
 - [ ] Add and run BR-CO-15 rounding regression tests.
 - [ ] Reconcile all 40 ASP submissions and safely repair only confirmed unaccepted invoices.
 - [ ] Validate corrected Ghaf workbook dates.
